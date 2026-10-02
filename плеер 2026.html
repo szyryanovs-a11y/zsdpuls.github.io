@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Наш YouTube SR Выделенный Плеер</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000 !important; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0; }
+  #player-container { width: 100vw; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; color: #4ecca3; font-family: Arial, sans-serif; font-style: italic; font-size: 14px; text-align: center; }
+  iframe { width: 100vw; height: 100vh; border: none; background: #000; }
+</style>
+</head>
+<body>
+
+  <div id="player-container">Плеер запущен! Ожидание нажатия кнопки Play на синем пульте...</div>
+
+<script>
+  // Этот независимый файл только ловит сигналы и крутит видео в embed формате оверлея
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'split_dock_force_play_id' && event.newValue) {
+      const videoData = JSON.parse(event.newValue);
+      startVideoDirect(videoData.id);
+    }
+  });
+
+  function startVideoDirect(id) {
+    const container = document.getElementById('player-container');
+    container.innerHTML = '<iframe src="https://youtube.com' + id + '?autoplay=1&controls=1&volume=100" allow="autoplay; encrypted-media"></iframe>';
+  }
+</script>
+</body>
+</html>
